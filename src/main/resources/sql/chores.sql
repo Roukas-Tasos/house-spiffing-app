@@ -1,0 +1,21 @@
+INSERT INTO chores(id, name, description, category_id) VALUES
+        (1, 'Dusting', 'Dusting surfaces', 1),
+        (2, 'Vacuuming', 'Vacuuming floors', 1),
+        (3, 'Mopping', 'Mopping floors', 1),
+        (4, 'Cleaning windows/mirrors', 'Polishing windows/mirrors for smudge-free appearance', 1),
+        (5, 'Sanitizing surfaces', 'Deep cleaning surfaces', 1),
+        (6, 'Washing clothes', 'Refresh our clothes stack with the help of a washing machine', 2),
+        (7, 'Drying/airing clothes', 'Hang clothes out to dry', 2),
+        (8, 'Ironing/folding clothes', 'Keep clothes chic', 2),
+        (9, 'Washing linen', 'Keeping linen sanitized and fragrant', 2),
+        (10, 'Meal preparation', 'Cook a tasty meal', 3),
+        (11, 'Washing dishes/utensil', 'Washing utensil in a dishwasher or a sink', 3),
+        (12, 'Cleaning countertops/sink', 'Keeping a neat kitchen', 3),
+        (13, 'Emptying garbage', 'Garbage disposal is a must', 3),
+        (14, 'Scrubbing toilet/sink/bathtub', 'Sanitizing bathroom surfaces', 4),
+        (15, 'Restocking toiletries', 'Take care of restocking necessary toiletries', 4),
+        (16, 'Sweeping patios/balconies', 'Keep patios/balconies clean and safe to use', 5),
+        (17, 'Watering plants', 'Keeping our flower friends healthy and vibrant', 5),
+        (18, 'Fixing minor repairs', 'Fixing necessary minor repairs in the household', 6),
+        (19, 'Maintaining HVAC systems', 'Keeping vital appliances of the household clean and operational', 6);
+ALTER TABLE chores AUTO_INCREMENT = 20;
