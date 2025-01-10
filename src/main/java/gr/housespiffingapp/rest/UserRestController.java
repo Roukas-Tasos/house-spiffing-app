@@ -43,15 +43,6 @@ public class UserRestController {
         return user;
     }
 
-//    @GetMapping("users/{username}")
-//    public User getByUsername(@PathVariable String username) throws AppObjectNotFoundException {
-//
-//        User user = userRepository.findByUsername(username)
-//                .orElseThrow(() -> new AppObjectNotFoundException("User", "User with id" + username + " not found"));
-//
-//        return user;
-//    }
-
     @Operation(summary = "Create a user", description = "Creates a new user")
     @PostMapping("/users/save")
     public ResponseEntity<UserReadOnlyDTO> saveUser(
@@ -62,12 +53,13 @@ public class UserRestController {
         return new ResponseEntity<>(savedUser, HttpStatus.OK);
     }
 
-//    @PutMapping("users/update")
-//    public User userUpdate(@Valid @RequestBody Long userId, UserUpdateDTO userUpdateDTO, BindingResult  bindingResult)
+//    @PutMapping("users/update{userId}")
+//    public ResponseEntity<UserReadOnlyDTO> userUpdate
+//            (@Valid @PathVariable Long userId, @RequestBody UserUpdateDTO updateUser, BindingResult  bindingResult)
 //            throws AppObjectNotFoundException {
 //
-//        User user = userService.updateUser(userId, userUpdateDTO);
-//        return user;
+//        UserReadOnlyDTO updatedUser = userService.updateUser(userId, updateUser);
+//        return new ResponseEntity<>(updatedUser, HttpStatus.OK);
 //    }
 
     @Operation(summary = "Delete a user", description = "Deletes a user by their ID")
@@ -77,7 +69,7 @@ public class UserRestController {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new AppObjectNotFoundException("User", "User with id" + userId + " not found"));
 
-        userRepository.delete(user);
+        userService.deleteUser(userId);
         return "User with id " + userId + " deleted successfully";
     }
 }

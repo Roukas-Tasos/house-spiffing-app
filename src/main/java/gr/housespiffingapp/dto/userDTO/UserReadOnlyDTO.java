@@ -15,9 +15,13 @@ public class UserReadOnlyDTO {
 
     private Long id;
 
-    private String getFullName;
+    private String firstname;
+
+    private String lastname;
 
     private String username;
+
+    private String password;
 
     private LocalDate dateOfBirth;
 

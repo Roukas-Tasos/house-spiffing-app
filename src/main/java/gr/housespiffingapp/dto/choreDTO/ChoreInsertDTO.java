@@ -28,5 +28,5 @@ public class ChoreInsertDTO {
     private LocalDate dueDate;
 
     @NotNull(message = "Category ID of chore is required")
-    private Category categoryId;
+    private Long categoryId;
 }

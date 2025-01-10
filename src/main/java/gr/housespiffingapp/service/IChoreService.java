@@ -16,7 +16,7 @@ public interface IChoreService {
 
     List<ChoreReadOnlyDTO> findAllByCategoryId(Long categoryId);
 
-    ChoreReadOnlyDTO save(ChoreInsertDTO choreInsertDTO) throws AppObjectAlreadyExists;
+    ChoreReadOnlyDTO save(ChoreInsertDTO choreInsertDTO) throws AppObjectAlreadyExists, AppObjectNotFoundException;
 
     ChoreReadOnlyDTO update(ChoreUpdateDTO choreUpdateDTO, Long id) throws AppObjectNotFoundException;
 

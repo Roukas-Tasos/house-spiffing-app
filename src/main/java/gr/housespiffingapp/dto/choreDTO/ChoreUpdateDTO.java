@@ -29,7 +29,7 @@ public class ChoreUpdateDTO {
     private String description;
 
     @NotNull(message = "Choose a category id for this chore")
-    private Category categoryId;
+    private Long categoryId;
 
     @NotEmpty(message = "Chore must be assigned to a specific date")
     private LocalDate dueDate;

@@ -6,13 +6,16 @@ import gr.housespiffingapp.dto.choreDTO.ChoreInsertDTO;
 import gr.housespiffingapp.dto.choreDTO.ChoreReadOnlyDTO;
 import gr.housespiffingapp.dto.choreDTO.ChoreUpdateDTO;
 import gr.housespiffingapp.mapper.Mapper;
+import gr.housespiffingapp.model.Category;
 import gr.housespiffingapp.model.Chore;
+import gr.housespiffingapp.repository.CategoryRepository;
 import gr.housespiffingapp.repository.ChoreRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -21,6 +24,7 @@ public class ChoreService implements IChoreService {
 
     private final ChoreRepository choreRepository;
     private final Mapper mapper;
+    private final CategoryRepository categoryRepository;
 
     @Override
     public ChoreReadOnlyDTO findById(Long id) throws AppObjectNotFoundException {
@@ -47,20 +51,49 @@ public class ChoreService implements IChoreService {
                 .collect(Collectors.toList());
     }
 
+//    @Override
+//    @Transactional(rollbackOn = Exception.class)
+//    public ChoreReadOnlyDTO save(ChoreInsertDTO choreInsertDTO) throws AppObjectAlreadyExists {
+//
+//        if (choreRepository.findByName(choreInsertDTO.getName()).isPresent()) {
+//            throw new AppObjectAlreadyExists("Chore", "Chore with name " + choreInsertDTO.getName() + " alreadry exists");
+//        }
+//
+//        Chore chore = mapper.mapToChoreEntity(choreInsertDTO);
+//
+//        Chore savedChore = choreRepository.save(chore);
+//
+//        return mapper.mapToChoreReadOnlyDTO(savedChore);
+//    }
+
     @Override
     @Transactional(rollbackOn = Exception.class)
-    public ChoreReadOnlyDTO save(ChoreInsertDTO choreInsertDTO) throws AppObjectAlreadyExists {
+    public ChoreReadOnlyDTO save(ChoreInsertDTO choreInsertDTO) throws AppObjectAlreadyExists, AppObjectNotFoundException {
 
         if (choreRepository.findByName(choreInsertDTO.getName()).isPresent()) {
-            throw new AppObjectAlreadyExists("Chore", "Chore with name " + choreInsertDTO.getName() + " alreadry exists");
+            throw new AppObjectAlreadyExists(
+                    "Chore",
+                    "Chore with name " + choreInsertDTO.getName() + " already exists"
+            );
         }
 
-        Chore chore = mapper.mapToChoreEntity(choreInsertDTO);
+        // Fetch the category from the DB by the ID
+        Category category = categoryRepository
+                .findById(choreInsertDTO.getCategoryId())
+                .orElseThrow(() -> new AppObjectNotFoundException("Category", "Category not found"));
+
+
+        Chore chore = new Chore();
+        chore.setName(choreInsertDTO.getName());
+        chore.setDescription(choreInsertDTO.getDescription());
+        chore.setDueDate(choreInsertDTO.getDueDate());
+        chore.setCategory(category);
 
         Chore savedChore = choreRepository.save(chore);
 
         return mapper.mapToChoreReadOnlyDTO(savedChore);
     }
+
 
     @Override
     @Transactional(rollbackOn = Exception.class)

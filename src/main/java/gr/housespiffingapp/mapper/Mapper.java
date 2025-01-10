@@ -16,15 +16,16 @@ import gr.housespiffingapp.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
-
-import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 @Component
 @RequiredArgsConstructor
 public class Mapper {
 
-    // User Mappings for insert, update, readOnly
+    // User Mappings
     public User mapToUserEntity(UserInsertDTO userInsertDTO) {
         User user = new User();
         user.setFirstname(userInsertDTO.getFirstname());
@@ -41,8 +42,10 @@ public class Mapper {
 
         return new UserReadOnlyDTO(
                 user.getId(),
-                user.getFullName(),
+                user.getFirstname(),
+                user.getLastname(),
                 user.getUsername(),
+                user.getPassword(),
                 user.getDateOfBirth(),
                 user.getGender(),
                 user.getRole().toString());
@@ -58,24 +61,41 @@ public class Mapper {
 
     public CategoryReadOnlyDTO mapToCategoryReadOnlyDTO(Category category) {
 
+        List<ChoreReadOnlyDTO> choreDTOs = Optional.ofNullable(category.getChores())
+                .orElse(Collections.emptySet())
+                .stream()
+                .map(this::mapToChoreReadOnlyDTO)
+                .collect(Collectors.toList());
+
         return new CategoryReadOnlyDTO(
                 category.getId(),
                 category.getName(),
                 category.getDescription(),
-                category.getChores()
-                        .stream()
-                        .map(this::mapToChoreReadOnlyDTO)
-                        .collect(Collectors.toList()));
+                choreDTOs
+        );
     }
 
+
+//    public CategoryReadOnlyDTO mapToCategoryReadOnlyDTO(Category category) {
+//
+//        return new CategoryReadOnlyDTO(
+//                category.getId(),
+//                category.getName(),
+//                category.getDescription(),
+//                category.getChores()
+//                        .stream()
+//                        .map(this::mapToChoreReadOnlyDTO)
+//                        .collect(Collectors.toList()));
+//    }
+
     // Chore Mappers
-    public Chore mapToChoreEntity(ChoreInsertDTO choreInsertDTO) {
-        Chore chore = new Chore();
-        chore.setName(choreInsertDTO.getName());
-        chore.setDescription(choreInsertDTO.getDescription());
-        chore.setCategory(choreInsertDTO.getCategoryId());
-        return chore;
-    }
+//    public Chore mapToChoreEntity(ChoreInsertDTO choreInsertDTO) {
+//        Chore chore = new Chore();
+//        chore.setName(choreInsertDTO.getName());
+//        chore.setDescription(choreInsertDTO.getDescription());
+//        chore.setCategory(choreInsertDTO.getCategory());
+//        return chore;
+//    }
 
     public ChoreReadOnlyDTO mapToChoreReadOnlyDTO(Chore chore) {
 

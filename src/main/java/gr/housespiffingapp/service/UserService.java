@@ -1,17 +1,14 @@
 package gr.housespiffingapp.service;
 
+import gr.housespiffingapp.core.enums.Role;
 import gr.housespiffingapp.core.exceptions.AppObjectAlreadyExists;
-import gr.housespiffingapp.core.exceptions.AppObjectInvalidArgumentException;
 import gr.housespiffingapp.core.exceptions.AppObjectNotFoundException;
 import gr.housespiffingapp.dto.userDTO.UserInsertDTO;
 import gr.housespiffingapp.dto.userDTO.UserReadOnlyDTO;
 import gr.housespiffingapp.dto.userDTO.UserUpdateDTO;
 import gr.housespiffingapp.mapper.Mapper;
 import gr.housespiffingapp.model.User;
-import gr.housespiffingapp.repository.CategoryRepository;
-import gr.housespiffingapp.repository.ChoreRepository;
 import gr.housespiffingapp.repository.UserRepository;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -30,7 +27,7 @@ public class UserService implements IUserService {
     public UserReadOnlyDTO findById(Long id) throws AppObjectNotFoundException {
 
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new AppObjectNotFoundException("User", "User with id " + id + " not found") );
+                .orElseThrow(() -> new AppObjectNotFoundException("User", "User with id " + id + " not found"));
 
         return mapper.mapToUserReadOnlyDTO(user);
     }
@@ -60,18 +57,31 @@ public class UserService implements IUserService {
         return mapper.mapToUserReadOnlyDTO(savedUser);
     }
 
-    @Override
-    @Transactional(rollbackOn = Exception.class)
-    public UserReadOnlyDTO updateUser(Long id, UserUpdateDTO userUpdateDTO)
-            throws AppObjectNotFoundException {
-
-        User existingUser = userRepository.findById(id)
-                .orElseThrow(() -> new AppObjectNotFoundException("User", "User with id " + id + " not found"));
-
-        User updatedUser = userRepository.save(existingUser);
-
-        return mapper.mapToUserReadOnlyDTO(userRepository.save(updatedUser));
-    }
+//    @Override
+//    @Transactional(rollbackOn = Exception.class)
+//    public UserReadOnlyDTO updateUser(Long id, UserUpdateDTO userUpdateDTO)
+//            throws AppObjectNotFoundException {
+//        UserReadOnlyDTO userReadOnlyDTO = new UserReadOnlyDTO();
+//
+//        return userRepository.findById(id).map(userReadOnlyDTO -> {
+//            if (userUpdateDTO.getFirstname() != null) {
+//                userReadOnlyDTO.setFirstname(userUpdateDTO.getFirstname());
+//            }
+//            if (userUpdateDTO.getLastname() != null) {
+//                userReadOnlyDTO.setLastname(userUpdateDTO.getLastname());
+//            }
+//            if (userUpdateDTO.getUsername() != null) {
+//                userReadOnlyDTO.setUsername(userUpdateDTO.getUsername());
+//            }
+//            if (userUpdateDTO.getPassword() != null) {
+//                userReadOnlyDTO.setPassword(userUpdateDTO.getPassword());
+//            }
+//            if (userUpdateDTO.getRole() != null) {
+//                userReadOnlyDTO.setRole(Role.valueOf(userUpdateDTO.getRole()));
+//            }
+//            return userReadOnlyDTO;
+//        });
+//    }
 
     @Override
     @Transactional(rollbackOn = Exception.class)

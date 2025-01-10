@@ -50,7 +50,7 @@ public class ChoreRestController {
     @Operation(summary = "Insert a chore", description = "Inserts a new custom chore")
     @PostMapping("/chores/save")
     public ResponseEntity<ChoreReadOnlyDTO> saveChore(@Valid @RequestBody ChoreInsertDTO choreInsertDTO)
-            throws AppObjectAlreadyExists {
+            throws AppObjectAlreadyExists, AppObjectNotFoundException {
 
         ChoreReadOnlyDTO savedChore = choreService.save(choreInsertDTO);
         return new ResponseEntity<>(savedChore, HttpStatus.OK);
@@ -73,15 +73,15 @@ public class ChoreRestController {
     public Optional<ResponseEntity<ChoreUpdateDTO>> update(@PathVariable Long id,
                                            @RequestBody ChoreUpdateDTO choreUpdateDTO) {
 
-        return choreRepository.findById(id).map(existingChore ->{
+        return choreRepository.findById(id).map(existingChore -> {
             existingChore.setName(choreUpdateDTO.getName());
             existingChore.setDescription(choreUpdateDTO.getDescription());
-            existingChore.setCategory(choreUpdateDTO.getCategoryId());
+//            existingChore.setCategory(choreUpdateDTO.getCategoryId());
             existingChore.setDueDate(choreUpdateDTO.getDueDate());
 
             Chore updatedChore = choreRepository.save(existingChore);
             return new ResponseEntity(updatedChore, HttpStatus.OK);
         });
     }
-
 }
+
