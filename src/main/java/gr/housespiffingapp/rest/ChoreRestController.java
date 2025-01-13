@@ -39,12 +39,11 @@ public class ChoreRestController {
 
     @Operation(summary = "Returns a chore", description = "Returns a chore by its ID")
     @GetMapping("chores/{choreId}")
-    public ChoreReadOnlyDTO getChore(@PathVariable long choreId)
+    public ResponseEntity<ChoreReadOnlyDTO> getChore(@PathVariable long choreId)
             throws AppObjectNotFoundException {
 
         ChoreReadOnlyDTO dto = choreService.findById(choreId);
-
-        return dto;
+        return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
     @Operation(summary = "Insert a chore", description = "Inserts a new custom chore")
@@ -57,31 +56,22 @@ public class ChoreRestController {
     }
 
     @Operation(summary = "Delete a chore", description = "Delete a chore by their ID")
-    @DeleteMapping("chores/{choreId}")
-    public String deleteChore(@PathVariable Long choreId)
+    @DeleteMapping("chores/{id}")
+    public String delete(@PathVariable Long id)
             throws AppObjectNotFoundException {
 
-        Chore chore = choreRepository.findById(choreId)
-                .orElseThrow(() -> new AppObjectNotFoundException("User", "User with id" + choreId + " not found"));
-
-        choreRepository.delete(chore);
-        return "User with id " + choreId + " deleted successfully";
+        choreService.delete(id);
+        return "User with id " + id + " deleted successfully";
     }
 
     @Operation(summary = "Update a chore", description = "Update an existing chore")
-    @PutMapping("/chores/update")
-    public Optional<ResponseEntity<ChoreUpdateDTO>> update(@PathVariable Long id,
-                                           @RequestBody ChoreUpdateDTO choreUpdateDTO) {
+    @PutMapping("/chores/update/{id}")
+    public ResponseEntity<ChoreReadOnlyDTO> update(
+            @PathVariable Long id,
+            @RequestBody ChoreUpdateDTO choreUpdateDTO) throws AppObjectNotFoundException {
 
-        return choreRepository.findById(id).map(existingChore -> {
-            existingChore.setName(choreUpdateDTO.getName());
-            existingChore.setDescription(choreUpdateDTO.getDescription());
-//            existingChore.setCategory(choreUpdateDTO.getCategoryId());
-            existingChore.setDueDate(choreUpdateDTO.getDueDate());
+        return new ResponseEntity<>(choreService.update(choreUpdateDTO, id), HttpStatus.OK);
 
-            Chore updatedChore = choreRepository.save(existingChore);
-            return new ResponseEntity(updatedChore, HttpStatus.OK);
-        });
     }
 }
 

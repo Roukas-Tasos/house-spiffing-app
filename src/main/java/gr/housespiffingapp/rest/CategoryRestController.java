@@ -36,12 +36,12 @@ public class CategoryRestController {
 
     @Operation(summary = "Returns a category", description = "Returns a category by its ID")
     @GetMapping("categories/{categoryId}")
-    public CategoryReadOnlyDTO getCategory(@PathVariable long categoryId)
+    public ResponseEntity<CategoryReadOnlyDTO> getCategory(@PathVariable long categoryId)
             throws AppObjectNotFoundException {
 
         CategoryReadOnlyDTO dto = categoryService.findById(categoryId);
 
-        return dto;
+        return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
     @Operation(summary = "Insert a category", description = "Inserts a new custom category")

@@ -1,7 +1,9 @@
 package gr.housespiffingapp.dto.userDTO;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import gr.housespiffingapp.core.enums.GenderType;
 import gr.housespiffingapp.core.enums.Role;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,10 +27,11 @@ public class UserInsertDTO {
     private String lastname;
 
     @NotBlank(message = "Email is required as a username")
-    @Email(message = "Invalid username")
+    @Email(message = "Username must be a valid email address")
+    @Pattern(regexp="^[a-zA-Z0-9._+-]+@[a-zA-Z0-9.-]+/.{2,}$")
     private String username;
 
-    @Pattern(regexp = "^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[!@#$%^&*]).{6,}$", message = "Invalid password")
+    @Pattern(regexp = "^(.+)@(\\S+)$", message = "Invalid password")
     @Size(min = 6, message = "Password muse be at least 6 characters")
     private String password;
 

@@ -57,31 +57,38 @@ public class UserService implements IUserService {
         return mapper.mapToUserReadOnlyDTO(savedUser);
     }
 
-//    @Override
-//    @Transactional(rollbackOn = Exception.class)
-//    public UserReadOnlyDTO updateUser(Long id, UserUpdateDTO userUpdateDTO)
-//            throws AppObjectNotFoundException {
-//        UserReadOnlyDTO userReadOnlyDTO = new UserReadOnlyDTO();
-//
-//        return userRepository.findById(id).map(userReadOnlyDTO -> {
-//            if (userUpdateDTO.getFirstname() != null) {
-//                userReadOnlyDTO.setFirstname(userUpdateDTO.getFirstname());
-//            }
-//            if (userUpdateDTO.getLastname() != null) {
-//                userReadOnlyDTO.setLastname(userUpdateDTO.getLastname());
-//            }
-//            if (userUpdateDTO.getUsername() != null) {
-//                userReadOnlyDTO.setUsername(userUpdateDTO.getUsername());
-//            }
-//            if (userUpdateDTO.getPassword() != null) {
-//                userReadOnlyDTO.setPassword(userUpdateDTO.getPassword());
-//            }
-//            if (userUpdateDTO.getRole() != null) {
-//                userReadOnlyDTO.setRole(Role.valueOf(userUpdateDTO.getRole()));
-//            }
-//            return userReadOnlyDTO;
-//        });
-//    }
+    @Override
+    @Transactional(rollbackOn = Exception.class)
+    public UserReadOnlyDTO update(Long id, UserUpdateDTO userUpdateDTO)
+            throws AppObjectNotFoundException {
+
+        User existingUser = userRepository.findById(id)
+                .orElseThrow(() -> new AppObjectNotFoundException("User", "User with id " + id + " not found"));
+
+        if (userUpdateDTO.getFirstname() != null) {
+            existingUser.setFirstname(userUpdateDTO.getFirstname());
+        }
+
+        if (userUpdateDTO.getLastname() != null) {
+            existingUser.setLastname(userUpdateDTO.getLastname());
+        }
+
+        if (userUpdateDTO.getUsername() != null) {
+            existingUser.setUsername(userUpdateDTO.getUsername());
+        }
+
+        if (userUpdateDTO.getPassword() != null) {
+            existingUser.setPassword(userUpdateDTO.getPassword());
+        }
+
+        if (userUpdateDTO.getRole() != null) {
+            existingUser.setRole(userUpdateDTO.getRole());
+        }
+
+        User updatedUser = userRepository.save(existingUser);
+
+        return mapper.mapToUserReadOnlyDTO(updatedUser);
+    }
 
     @Override
     @Transactional(rollbackOn = Exception.class)
@@ -90,7 +97,6 @@ public class UserService implements IUserService {
         if (!userRepository.existsById(id)) {
             throw new AppObjectNotFoundException("Category", "User with id " + id + " not found");
         }
-
         userRepository.deleteById(id);
     }
 }

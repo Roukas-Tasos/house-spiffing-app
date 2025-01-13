@@ -3,6 +3,7 @@ package gr.housespiffingapp.model;
 import gr.housespiffingapp.core.enums.GenderType;
 import gr.housespiffingapp.core.enums.Role;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.security.core.GrantedAuthority;

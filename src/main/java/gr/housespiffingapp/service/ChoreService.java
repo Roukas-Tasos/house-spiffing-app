@@ -51,21 +51,6 @@ public class ChoreService implements IChoreService {
                 .collect(Collectors.toList());
     }
 
-//    @Override
-//    @Transactional(rollbackOn = Exception.class)
-//    public ChoreReadOnlyDTO save(ChoreInsertDTO choreInsertDTO) throws AppObjectAlreadyExists {
-//
-//        if (choreRepository.findByName(choreInsertDTO.getName()).isPresent()) {
-//            throw new AppObjectAlreadyExists("Chore", "Chore with name " + choreInsertDTO.getName() + " alreadry exists");
-//        }
-//
-//        Chore chore = mapper.mapToChoreEntity(choreInsertDTO);
-//
-//        Chore savedChore = choreRepository.save(chore);
-//
-//        return mapper.mapToChoreReadOnlyDTO(savedChore);
-//    }
-
     @Override
     @Transactional(rollbackOn = Exception.class)
     public ChoreReadOnlyDTO save(ChoreInsertDTO choreInsertDTO) throws AppObjectAlreadyExists, AppObjectNotFoundException {
@@ -97,7 +82,8 @@ public class ChoreService implements IChoreService {
 
     @Override
     @Transactional(rollbackOn = Exception.class)
-    public ChoreReadOnlyDTO update(ChoreUpdateDTO choreUpdateDTO, Long id) throws AppObjectNotFoundException {
+    public ChoreReadOnlyDTO update(ChoreUpdateDTO choreUpdateDTO, Long id)
+            throws AppObjectNotFoundException {
 
         Chore existingChore = choreRepository.findById(id)
                 .orElseThrow(() -> new AppObjectNotFoundException("Chore", "Chore with id " + id + " not found"));
@@ -124,7 +110,6 @@ public class ChoreService implements IChoreService {
         if (choreRepository.existsById(id)) {
             throw new AppObjectNotFoundException("Category", "Chore with id " + id + " not found");
         }
-
         choreRepository.deleteById(id);
     }
 }
