@@ -19,7 +19,7 @@ public interface IUserService {
     UserReadOnlyDTO saveUser(UserInsertDTO userInsertDTO)
             throws AppObjectAlreadyExists, AppObjectInvalidArgumentException;
 
-    UserReadOnlyDTO update(Long id, UserUpdateDTO userUpdateDTO)
+    UserReadOnlyDTO updateUser(Long id, UserUpdateDTO userUpdateDTO)
             throws AppObjectNotFoundException, AppObjectInvalidArgumentException;
 
     void deleteUser(Long id) throws AppObjectNotFoundException;

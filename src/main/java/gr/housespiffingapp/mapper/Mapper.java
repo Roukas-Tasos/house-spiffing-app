@@ -14,6 +14,7 @@ import gr.housespiffingapp.model.Category;
 import gr.housespiffingapp.model.Chore;
 import gr.housespiffingapp.model.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;
@@ -25,9 +26,12 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class Mapper {
 
+    private final PasswordEncoder passwordEncoder;
+
     // User Mappings
     public User mapToUserEntity(UserInsertDTO userInsertDTO) {
         User user = new User();
+
         user.setFirstname(userInsertDTO.getFirstname());
         user.setLastname(userInsertDTO.getLastname());
         user.setUsername(userInsertDTO.getUsername());
@@ -35,6 +39,7 @@ public class Mapper {
         user.setDateOfBirth(userInsertDTO.getDateOfBirth());
         user.setGender(userInsertDTO.getGender());
         user.setRole(Role.valueOf(userInsertDTO.getRole().name()));
+        user.setIsActive(userInsertDTO.getIsActive());
         return user;
     }
 
@@ -48,7 +53,8 @@ public class Mapper {
                 user.getPassword(),
                 user.getDateOfBirth(),
                 user.getGender(),
-                user.getRole().toString());
+                user.getRole().toString(),
+                user.getIsActive());
     }
 
     // Category Mapper

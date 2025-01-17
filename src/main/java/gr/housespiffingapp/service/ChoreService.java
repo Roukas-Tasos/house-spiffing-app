@@ -45,7 +45,7 @@ public class ChoreService implements IChoreService {
 
     @Override
     public List<ChoreReadOnlyDTO> findAllByCategoryId(Long categoryId) {
-        return choreRepository.findByCategoryId(categoryId)
+        return choreRepository.findAllByCategoryId(categoryId)
                 .stream()
                 .map(mapper::mapToChoreReadOnlyDTO)
                 .collect(Collectors.toList());
@@ -58,15 +58,12 @@ public class ChoreService implements IChoreService {
         if (choreRepository.findByName(choreInsertDTO.getName()).isPresent()) {
             throw new AppObjectAlreadyExists(
                     "Chore",
-                    "Chore with name " + choreInsertDTO.getName() + " already exists"
-            );
+                    "Chore with name " + choreInsertDTO.getName() + " already exists");
         }
 
-        // Fetch the category from the DB by the ID
         Category category = categoryRepository
                 .findById(choreInsertDTO.getCategoryId())
                 .orElseThrow(() -> new AppObjectNotFoundException("Category", "Category not found"));
-
 
         Chore chore = new Chore();
         chore.setName(choreInsertDTO.getName());

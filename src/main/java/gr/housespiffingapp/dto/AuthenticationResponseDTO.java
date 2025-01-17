@@ -8,7 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 public class AuthenticationResponseDTO {
 
-    private String firstname;
-    private String lastname;
+    private String fullname;
+    private String username;
     private String token;
 }

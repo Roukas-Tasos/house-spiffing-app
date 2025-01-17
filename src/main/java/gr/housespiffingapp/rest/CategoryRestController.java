@@ -4,10 +4,7 @@ import gr.housespiffingapp.core.exceptions.AppObjectAlreadyExists;
 import gr.housespiffingapp.core.exceptions.AppObjectNotFoundException;
 import gr.housespiffingapp.dto.categoryDTO.CategoryInsertDTO;
 import gr.housespiffingapp.dto.categoryDTO.CategoryReadOnlyDTO;
-import gr.housespiffingapp.dto.choreDTO.ChoreInsertDTO;
-import gr.housespiffingapp.dto.choreDTO.ChoreReadOnlyDTO;
-import gr.housespiffingapp.model.Category;
-import gr.housespiffingapp.repository.CategoryRepository;
+import gr.housespiffingapp.dto.categoryDTO.CategoryUpdateDTO;
 import gr.housespiffingapp.service.CategoryService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
@@ -24,7 +21,6 @@ import java.util.List;
 public class CategoryRestController {
 
     private final CategoryService categoryService;
-    private final CategoryRepository categoryRepository;
 
     @Operation(summary = "Returns categories", description = "Returns all categories of chores from the database")
     @GetMapping("/categories")
@@ -35,17 +31,17 @@ public class CategoryRestController {
     }
 
     @Operation(summary = "Returns a category", description = "Returns a category by its ID")
-    @GetMapping("categories/{categoryId}")
-    public ResponseEntity<CategoryReadOnlyDTO> getCategory(@PathVariable long categoryId)
+    @GetMapping("categories/{id}")
+    public ResponseEntity<CategoryReadOnlyDTO> getCategory(@PathVariable Long id)
             throws AppObjectNotFoundException {
 
-        CategoryReadOnlyDTO dto = categoryService.findById(categoryId);
+        CategoryReadOnlyDTO dto = categoryService.findById(id);
 
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
-    @Operation(summary = "Insert a category", description = "Inserts a new custom category")
-    @PostMapping("/category/save")
+    @Operation(summary = "Inserts a category", description = "Inserts a new custom category")
+    @PostMapping("/categories/save")
     public ResponseEntity<CategoryReadOnlyDTO> save(@Valid @RequestBody CategoryInsertDTO categoryInsertDTO)
             throws AppObjectAlreadyExists {
 
@@ -53,13 +49,21 @@ public class CategoryRestController {
         return new ResponseEntity<>(savedCategory, HttpStatus.OK);
     }
 
-    @DeleteMapping("categories/{categoryId}")
-    public String deleteCategory(@PathVariable Long categoryId) throws AppObjectNotFoundException {
+    @Operation(summary= "Updates a category", description = "Updates a saved category")
+    @PutMapping("categories/update{id}")
+    public ResponseEntity<CategoryReadOnlyDTO> update(@Valid
+                                                          @PathVariable Long id,
+                                                          @RequestBody CategoryUpdateDTO categoryUpdateDTO) throws AppObjectNotFoundException {
 
-        Category category = categoryRepository.findById(categoryId)
-                .orElseThrow(() -> new AppObjectNotFoundException("Category", "Category with id" + categoryId + " not found"));
+        CategoryReadOnlyDTO updatedCategory = categoryService.update(id, categoryUpdateDTO);
+        return new ResponseEntity<>(updatedCategory, HttpStatus.OK);
+    }
 
-        categoryRepository.delete(category);
-        return "Category with id " + categoryId + " deleted successfully";
+    @Operation(summary = "Deletes a category", description = "Deletes a category by its Id")
+    @DeleteMapping("categories/{id}")
+    public String deleteCategory(@PathVariable Long id) throws AppObjectNotFoundException {
+
+        categoryService.delete(id);
+        return "Category with id " + id + " deleted successfully";
     }
 }

@@ -49,6 +49,10 @@ public class User extends AbstractEntity implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @ColumnDefault("true")
+    @Column(name = "is_active")
+    private Boolean isActive;
+
     public String getFullName() {
         return firstname + " " + lastname;
     }
@@ -82,4 +86,7 @@ public class User extends AbstractEntity implements UserDetails {
     public boolean isCredentialsNonExpired() {
         return true;
     }
+
+    @Override
+    public boolean isEnabled() { return this.getIsActive() == null || this.getIsActive(); }
 }

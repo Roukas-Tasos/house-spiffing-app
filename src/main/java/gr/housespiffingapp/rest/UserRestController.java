@@ -42,26 +42,27 @@ public class UserRestController {
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
-    @Operation(summary = "Create a user", description = "Creates a new user")
+    @Operation(summary = "Creates a user", description = "Creates a new user")
     @PostMapping("/users/save")
     public ResponseEntity<UserReadOnlyDTO> saveUser(
-            @Valid @RequestBody UserInsertDTO userInsertDTO, BindingResult bindingResult)
+            @Valid @RequestBody UserInsertDTO userInsertDTO)
                     throws AppObjectAlreadyExists {
 
         UserReadOnlyDTO savedUser = userService.saveUser(userInsertDTO);
         return new ResponseEntity<>(savedUser, HttpStatus.OK);
     }
 
+    @Operation(summary = "Updates a user", description = "Updates an already saved user")
     @PutMapping("users/update{userId}")
-    public ResponseEntity<UserReadOnlyDTO> update
+    public ResponseEntity<UserReadOnlyDTO> updateUser
             (@Valid @PathVariable Long userId, @RequestBody UserUpdateDTO updateUser, BindingResult  bindingResult)
             throws AppObjectNotFoundException, AppObjectInvalidArgumentException {
 
-        UserReadOnlyDTO updatedUser = userService.update(userId, updateUser);
+        UserReadOnlyDTO updatedUser = userService.updateUser(userId, updateUser);
         return new ResponseEntity<>(updatedUser, HttpStatus.OK);
     }
 
-    @Operation(summary = "Delete a user", description = "Deletes a user by their ID")
+    @Operation(summary = "Deletes a user", description = "Deletes a user by their ID")
     @DeleteMapping("users/{id}")
     public ResponseEntity<UserReadOnlyDTO> deleteUser(@PathVariable Long id)
             throws AppObjectNotFoundException {

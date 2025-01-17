@@ -13,7 +13,7 @@ public interface ChoreRepository
 
     Optional<Chore> findByName(String name);
 
-    Optional<Chore> findByCategoryId(Long id);
+    List<Chore> findAllByCategoryId(Long categoryId);
 
     Optional<Chore> findByDueDate(Date dueDate);
 

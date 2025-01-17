@@ -11,6 +11,7 @@ import gr.housespiffingapp.model.User;
 import gr.housespiffingapp.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,6 +23,7 @@ public class UserService implements IUserService {
 
     private final UserRepository userRepository;
     private final Mapper mapper;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public UserReadOnlyDTO findById(Long id) throws AppObjectNotFoundException {
@@ -52,6 +54,8 @@ public class UserService implements IUserService {
 
         User user = mapper.mapToUserEntity(userInsertDTO);
 
+        user.setPassword(passwordEncoder.encode(userInsertDTO.getPassword()));
+
         User savedUser = userRepository.save(user);
 
         return mapper.mapToUserReadOnlyDTO(savedUser);
@@ -59,7 +63,7 @@ public class UserService implements IUserService {
 
     @Override
     @Transactional(rollbackOn = Exception.class)
-    public UserReadOnlyDTO update(Long id, UserUpdateDTO userUpdateDTO)
+    public UserReadOnlyDTO updateUser(Long id, UserUpdateDTO userUpdateDTO)
             throws AppObjectNotFoundException {
 
         User existingUser = userRepository.findById(id)

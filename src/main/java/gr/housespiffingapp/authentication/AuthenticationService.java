@@ -7,6 +7,8 @@ import gr.housespiffingapp.model.User;
 import gr.housespiffingapp.repository.UserRepository;
 import gr.housespiffingapp.security.JwtService;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -19,6 +21,7 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
     private final UserRepository userRepository;
+    private final Logger LOGGER = LoggerFactory.getLogger(AuthenticationService.class);
 
     public AuthenticationResponseDTO authenticate(AuthenticationRequestDTO dto)
             throws AppObjectNotAuthorizedException {
@@ -31,6 +34,6 @@ public class AuthenticationService {
 
         String token = jwtService.generateToken(authentication.getName(), user.getRole().name());
 
-        return new AuthenticationResponseDTO(user.getFirstname(), user.getLastname(), token);
+        return new AuthenticationResponseDTO(user.getFullName(), user.getUsername(), token);
     }
 }

@@ -21,15 +21,18 @@ public class JwtService {
 
     private long jwtExpiration = 172_800_000; // 48 hours
 
-    public String generateToken(String username, String role) {
+    public String generateToken(String name, String role) {
 
         var claims = new HashMap<String, Object>();
         claims.put("role", role);
+//        claims.put("fullname", fullname);
+//        claims.put("username", username);
+
         return Jwts
                 .builder()
                 .setIssuer("self")
                 .setClaims((claims))
-                .setSubject(username)
+                .setSubject(name)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + jwtExpiration))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
@@ -63,7 +66,8 @@ public class JwtService {
     }
 
     private Claims extractAllClaims(String token) {
-        return Jwts.parserBuilder()
+        return Jwts
+                .parserBuilder()
                 .setSigningKey(getSignInKey())
                 .build()
                 .parseClaimsJws(token)

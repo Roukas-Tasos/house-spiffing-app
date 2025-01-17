@@ -37,6 +37,14 @@ public class ChoreRestController {
         return new ResponseEntity<>(chores, HttpStatus.OK);
     }
 
+    @Operation(summary = "Returns chores", description = "Returns all chores belonging to a specific category")
+    @GetMapping("chores/category/{categoryId}")
+    public ResponseEntity<List<ChoreReadOnlyDTO>> findAllByCategoryId(@PathVariable Long categoryId) {
+
+        List<ChoreReadOnlyDTO> chores = choreService.findAllByCategoryId(categoryId);
+        return new ResponseEntity<>(chores, HttpStatus.OK);
+    }
+
     @Operation(summary = "Returns a chore", description = "Returns a chore by its ID")
     @GetMapping("chores/{choreId}")
     public ResponseEntity<ChoreReadOnlyDTO> getChore(@PathVariable long choreId)
@@ -46,7 +54,7 @@ public class ChoreRestController {
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
-    @Operation(summary = "Insert a chore", description = "Inserts a new custom chore")
+    @Operation(summary = "Inserts a chore", description = "Inserts a new custom chore")
     @PostMapping("/chores/save")
     public ResponseEntity<ChoreReadOnlyDTO> saveChore(@Valid @RequestBody ChoreInsertDTO choreInsertDTO)
             throws AppObjectAlreadyExists, AppObjectNotFoundException {
@@ -55,7 +63,7 @@ public class ChoreRestController {
         return new ResponseEntity<>(savedChore, HttpStatus.OK);
     }
 
-    @Operation(summary = "Delete a chore", description = "Delete a chore by their ID")
+    @Operation(summary = "Deletes a chore", description = "Deletes a chore by their ID")
     @DeleteMapping("chores/{id}")
     public String delete(@PathVariable Long id)
             throws AppObjectNotFoundException {
@@ -64,7 +72,7 @@ public class ChoreRestController {
         return "User with id " + id + " deleted successfully";
     }
 
-    @Operation(summary = "Update a chore", description = "Update an existing chore")
+    @Operation(summary = "Updates a chore", description = "Updates an existing chore")
     @PutMapping("/chores/update/{id}")
     public ResponseEntity<ChoreReadOnlyDTO> update(
             @PathVariable Long id,

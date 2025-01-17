@@ -14,13 +14,15 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
     public void commence(HttpServletRequest request,
                          HttpServletResponse response,
                          AuthenticationException authException)
-            throws IOException, ServletException {
+            throws IOException {
 
         // Set the response status to 401 unauthorized
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 
         // Write a custom JSON response with the collected information
-        String json = "{\"code\": \"userNotAuthenticated\", \"description\": \"User must authenticate before continuing\"}";
+//        String json = "{\"code\": \"userNotAuthenticated\", \"description\": \"User must authenticate before continuing\"}";
+        String json = String.format("{\"code\": \"userNotAuthenticated\", \"description\": \"%s\"}",
+                authException.getMessage());
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(json);

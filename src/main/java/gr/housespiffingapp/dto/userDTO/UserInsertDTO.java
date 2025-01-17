@@ -28,10 +28,10 @@ public class UserInsertDTO {
 
     @NotBlank(message = "Email is required as a username")
     @Email(message = "Username must be a valid email address")
-    @Pattern(regexp="^[a-zA-Z0-9._+-]+@[a-zA-Z0-9.-]+/.{2,}$")
+//    @Pattern(regexp="^[a-zA-Z0-9._+-]+@[a-zA-Z0-9.-]+/.{2,}$")
     private String username;
 
-    @Pattern(regexp = "^(.+)@(\\S+)$", message = "Invalid password")
+//    @Pattern(regexp = "^(.+)@(\\S+)$", message = "Invalid password")
     @Size(min = 6, message = "Password muse be at least 6 characters")
     private String password;
 
@@ -43,4 +43,7 @@ public class UserInsertDTO {
 
     @NotNull(message = "Role must not be null")
     private Role role;
+
+    @NotNull(message = "isActive field is required")
+    private Boolean isActive;
 }
