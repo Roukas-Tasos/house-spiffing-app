@@ -4,16 +4,12 @@ import gr.housespiffingapp.core.exceptions.*;
 import gr.housespiffingapp.dto.userDTO.UserInsertDTO;
 import gr.housespiffingapp.dto.userDTO.UserReadOnlyDTO;
 import gr.housespiffingapp.dto.userDTO.UserUpdateDTO;
-import gr.housespiffingapp.repository.UserRepository;
 import gr.housespiffingapp.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.User;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -55,8 +51,8 @@ public class UserRestController {
     @Operation(summary = "Updates a user", description = "Updates an already saved user")
     @PutMapping("users/update{userId}")
     public ResponseEntity<UserReadOnlyDTO> updateUser
-            (@Valid @PathVariable Long userId, @RequestBody UserUpdateDTO updateUser, BindingResult  bindingResult)
-            throws AppObjectNotFoundException, AppObjectInvalidArgumentException {
+            (@Valid @PathVariable Long userId, @RequestBody UserUpdateDTO updateUser)
+            throws AppObjectNotFoundException {
 
         UserReadOnlyDTO updatedUser = userService.updateUser(userId, updateUser);
         return new ResponseEntity<>(updatedUser, HttpStatus.OK);

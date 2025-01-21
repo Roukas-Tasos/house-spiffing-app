@@ -1,6 +1,5 @@
 package gr.housespiffingapp.service;
 
-import gr.housespiffingapp.core.enums.Role;
 import gr.housespiffingapp.core.exceptions.AppObjectAlreadyExists;
 import gr.housespiffingapp.core.exceptions.AppObjectNotFoundException;
 import gr.housespiffingapp.dto.userDTO.UserInsertDTO;

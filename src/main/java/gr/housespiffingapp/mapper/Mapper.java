@@ -3,13 +3,9 @@ package gr.housespiffingapp.mapper;
 import gr.housespiffingapp.core.enums.Role;
 import gr.housespiffingapp.dto.categoryDTO.CategoryInsertDTO;
 import gr.housespiffingapp.dto.categoryDTO.CategoryReadOnlyDTO;
-import gr.housespiffingapp.dto.categoryDTO.CategoryUpdateDTO;
-import gr.housespiffingapp.dto.choreDTO.ChoreInsertDTO;
 import gr.housespiffingapp.dto.choreDTO.ChoreReadOnlyDTO;
-import gr.housespiffingapp.dto.choreDTO.ChoreUpdateDTO;
 import gr.housespiffingapp.dto.userDTO.UserInsertDTO;
 import gr.housespiffingapp.dto.userDTO.UserReadOnlyDTO;
-import gr.housespiffingapp.dto.userDTO.UserUpdateDTO;
 import gr.housespiffingapp.model.Category;
 import gr.housespiffingapp.model.Chore;
 import gr.housespiffingapp.model.User;
@@ -67,41 +63,20 @@ public class Mapper {
 
     public CategoryReadOnlyDTO mapToCategoryReadOnlyDTO(Category category) {
 
+        CategoryReadOnlyDTO dto = new CategoryReadOnlyDTO();
+
         List<ChoreReadOnlyDTO> choreDTOs = Optional.ofNullable(category.getChores())
                 .orElse(Collections.emptySet())
                 .stream()
                 .map(this::mapToChoreReadOnlyDTO)
                 .collect(Collectors.toList());
 
-        return new CategoryReadOnlyDTO(
-                category.getId(),
-                category.getName(),
-                category.getDescription(),
-                choreDTOs
-        );
+        dto.setCategoryId(category.getId());
+        dto.setName(category.getName());
+        dto.setDescription(category.getDescription());
+        dto.setChores(choreDTOs);
+        return dto;
     }
-
-
-//    public CategoryReadOnlyDTO mapToCategoryReadOnlyDTO(Category category) {
-//
-//        return new CategoryReadOnlyDTO(
-//                category.getId(),
-//                category.getName(),
-//                category.getDescription(),
-//                category.getChores()
-//                        .stream()
-//                        .map(this::mapToChoreReadOnlyDTO)
-//                        .collect(Collectors.toList()));
-//    }
-
-    // Chore Mappers
-//    public Chore mapToChoreEntity(ChoreInsertDTO choreInsertDTO) {
-//        Chore chore = new Chore();
-//        chore.setName(choreInsertDTO.getName());
-//        chore.setDescription(choreInsertDTO.getDescription());
-//        chore.setCategory(choreInsertDTO.getCategory());
-//        return chore;
-//    }
 
     public ChoreReadOnlyDTO mapToChoreReadOnlyDTO(Chore chore) {
 

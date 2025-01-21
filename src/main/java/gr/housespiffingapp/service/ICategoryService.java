@@ -12,6 +12,8 @@ public interface ICategoryService {
 
     CategoryReadOnlyDTO findById(Long id) throws AppObjectNotFoundException;
 
+    CategoryReadOnlyDTO findByName(String name) throws AppObjectNotFoundException;
+
     List<CategoryReadOnlyDTO> findAll();
 
     CategoryReadOnlyDTO save(CategoryInsertDTO categoryInsertDTO) throws AppObjectAlreadyExists;

@@ -1,8 +1,6 @@
 package gr.housespiffingapp.dto.categoryDTO;
 
-import gr.housespiffingapp.dto.userDTO.UserInsertDTO;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

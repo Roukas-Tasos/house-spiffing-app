@@ -1,9 +1,6 @@
 package gr.housespiffingapp.dto.userDTO;
 
 import gr.housespiffingapp.core.enums.Role;
-import jakarta.annotation.Nullable;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

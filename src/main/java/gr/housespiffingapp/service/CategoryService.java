@@ -8,7 +8,6 @@ import gr.housespiffingapp.dto.categoryDTO.CategoryUpdateDTO;
 import gr.housespiffingapp.mapper.Mapper;
 import gr.housespiffingapp.model.Category;
 import gr.housespiffingapp.repository.CategoryRepository;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -28,6 +27,15 @@ public class CategoryService implements ICategoryService {
 
         Category category = categoryRepository.findById(id)
                 .orElseThrow(() -> new AppObjectNotFoundException("Category", "Category with id " + id + " not found"));
+
+        return mapper.mapToCategoryReadOnlyDTO(category);
+    }
+
+    @Override
+    public CategoryReadOnlyDTO findByName(String name) throws AppObjectNotFoundException {
+
+        Category category = categoryRepository.findByName(name)
+                .orElseThrow(() -> new AppObjectNotFoundException("Category", "Category with name " + name + " not found"));
 
         return mapper.mapToCategoryReadOnlyDTO(category);
     }
@@ -61,7 +69,7 @@ public class CategoryService implements ICategoryService {
             throws AppObjectNotFoundException {
 
         Category existingCategory = categoryRepository.findById(categoryUpdateDTO.getId())
-                .orElseThrow(() -> new AppObjectNotFoundException("Category", "Category with id " + id + "not found"));
+                .orElseThrow(() -> new AppObjectNotFoundException("Category", "Category with id " + id + " not found"));
 
         Category updatedCategory = categoryRepository.save(existingCategory);
 

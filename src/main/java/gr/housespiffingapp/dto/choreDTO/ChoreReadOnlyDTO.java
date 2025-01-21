@@ -1,6 +1,5 @@
 package gr.housespiffingapp.dto.choreDTO;
 
-import gr.housespiffingapp.model.Category;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

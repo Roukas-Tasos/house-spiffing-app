@@ -1,9 +1,7 @@
 package gr.housespiffingapp.dto.userDTO;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import gr.housespiffingapp.core.enums.GenderType;
 import gr.housespiffingapp.core.enums.Role;
-import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -44,6 +42,5 @@ public class UserInsertDTO {
     @NotNull(message = "Role must not be null")
     private Role role;
 
-    @NotNull(message = "isActive field is required")
     private Boolean isActive;
 }

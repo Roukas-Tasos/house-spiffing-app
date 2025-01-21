@@ -1,7 +1,5 @@
 package gr.housespiffingapp.dto.choreDTO;
 
-import gr.housespiffingapp.dto.userDTO.UserInsertDTO;
-import gr.housespiffingapp.model.Category;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;

@@ -30,12 +30,21 @@ public class CategoryRestController {
         return new ResponseEntity<>(categories, HttpStatus.OK);
     }
 
-    @Operation(summary = "Returns a category", description = "Returns a category by its ID")
-    @GetMapping("categories/{id}")
+    @Operation(summary = "Returns a category", description = "Returns a category by its Id")
+    @GetMapping("/categories/{id}")
     public ResponseEntity<CategoryReadOnlyDTO> getCategory(@PathVariable Long id)
             throws AppObjectNotFoundException {
 
         CategoryReadOnlyDTO dto = categoryService.findById(id);
+        return new ResponseEntity<>(dto, HttpStatus.OK);
+    }
+
+    @Operation(summary = "Returns a category", description = "Returns a category by its name")
+    @GetMapping("/categories/by-name/{name}")
+    public ResponseEntity<CategoryReadOnlyDTO> getCategory(@PathVariable String name)
+            throws AppObjectNotFoundException {
+
+        CategoryReadOnlyDTO dto = categoryService.findByName(name);
 
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
@@ -50,7 +59,7 @@ public class CategoryRestController {
     }
 
     @Operation(summary= "Updates a category", description = "Updates a saved category")
-    @PutMapping("categories/update{id}")
+    @PutMapping("categories/update/{id}")
     public ResponseEntity<CategoryReadOnlyDTO> update(@Valid
                                                           @PathVariable Long id,
                                                           @RequestBody CategoryUpdateDTO categoryUpdateDTO) throws AppObjectNotFoundException {

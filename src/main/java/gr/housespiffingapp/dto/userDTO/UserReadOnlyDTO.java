@@ -1,11 +1,9 @@
 package gr.housespiffingapp.dto.userDTO;
 
 import gr.housespiffingapp.core.enums.GenderType;
-import jakarta.persistence.Id;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @AllArgsConstructor

@@ -6,7 +6,6 @@ import gr.housespiffingapp.core.exceptions.AppObjectNotFoundException;
 import gr.housespiffingapp.dto.userDTO.UserInsertDTO;
 import gr.housespiffingapp.dto.userDTO.UserReadOnlyDTO;
 import gr.housespiffingapp.dto.userDTO.UserUpdateDTO;
-import gr.housespiffingapp.model.User;
 
 import java.util.List;
 
