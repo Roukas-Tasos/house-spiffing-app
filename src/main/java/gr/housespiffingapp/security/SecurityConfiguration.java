@@ -46,10 +46,11 @@ public class SecurityConfiguration {
                 .exceptionHandling(exceptions -> exceptions
                         .authenticationEntryPoint(myCustomAuthenticationEntryPoint()))
                 .authorizeHttpRequests(req -> req
+                                .requestMatchers("/").permitAll()
                         .requestMatchers("api/auth/authenticate").permitAll()
-//                        .requestMatchers("api/users/**").authenticated()
-                        .requestMatchers("api/categories/**").permitAll()
-                        .requestMatchers("/**").permitAll()
+                        .requestMatchers("api/categories/**").authenticated()
+                        .requestMatchers("api/chores/**").authenticated()
+//                        .requestMatchers("/**").permitAll()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(authenticationProvider())
