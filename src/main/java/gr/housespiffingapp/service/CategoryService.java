@@ -7,7 +7,9 @@ import gr.housespiffingapp.dto.categoryDTO.CategoryReadOnlyDTO;
 import gr.housespiffingapp.dto.categoryDTO.CategoryUpdateDTO;
 import gr.housespiffingapp.mapper.Mapper;
 import gr.housespiffingapp.model.Category;
+import gr.housespiffingapp.model.Chore;
 import gr.housespiffingapp.repository.CategoryRepository;
+import gr.housespiffingapp.repository.ChoreRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,8 @@ import java.util.stream.Collectors;
 public class CategoryService implements ICategoryService {
 
     private final CategoryRepository categoryRepository;
+    private final ChoreRepository choreRepository;
+    private final ChoreService choreService;
     private final Mapper mapper;
 
     @Override
@@ -81,10 +85,18 @@ public class CategoryService implements ICategoryService {
     @Transactional(rollbackOn = Exception.class)
     public void delete(Long id) throws AppObjectNotFoundException {
 
-        if (categoryRepository.findById(id).isEmpty()) {
-            throw new AppObjectNotFoundException("Category", "Category with id " + id + " not found");
+        Category existingCategory = categoryRepository.findById(id)
+                .orElseThrow(() -> new AppObjectNotFoundException("Category", "Category with id " + id + " not found"));
+        List<Chore> choresToDelete = choreRepository.findAllByCategoryId(id);
+        if (!choresToDelete.isEmpty()) {
+        choresToDelete.forEach(chore -> {
+            try {
+                choreService.delete(chore.getId());
+            } catch (AppObjectNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        });
         }
-
         categoryRepository.deleteById(id);
     }
 }

@@ -116,8 +116,8 @@ public class ChoreService implements IChoreService {
     @Transactional(rollbackOn = Exception.class)
     public void delete(Long id) throws AppObjectNotFoundException {
 
-        if (choreRepository.existsById(id)) {
-            throw new AppObjectNotFoundException("Category", "Chore with id " + id + " not found");
+        if (!choreRepository.existsById(id)) {
+            throw new AppObjectNotFoundException("Chore", "Chore with id " + id + " not found");
         }
         choreRepository.deleteById(id);
     }
