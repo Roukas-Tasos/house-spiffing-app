@@ -1,6 +1,8 @@
 Το project αυτό είναι μια full-stack εφαρμογή σχεδιασμένη για τη διαχείριση και την οργάνωση των δουλειών του σπιτιού. Έχει Spring Boot backend και Angular frontend.
 Παρακάτω βρίσκονται οι οδηγίες για την ανάπτυξη και το τεστάρισμα της εφαρμογής.
 
+Το repository του frontend είναι το https://github.com/Roukas-Tasos/house-spiffing-angular.
+
 Τεχνολογίες Backend:
 Framework: Spring Boot 3.3.4
 Database: MySQL
@@ -19,8 +21,6 @@ Git για version control
 Θα χρειαστεί να δημιουργήσουμε και να κάνουμε configure μια δική μας βάση δεδομένων.
 Μετά την εντολή ./gradlew clean build, δημιουργείται ένα αρχείο .jar στον φάκελο build/libs με όνομα house-spiffing-0.0.1-SNAPSHOT.jar.
 Έπειτα, τρέχουμε την εντολή java -jar build/libs/house-spiffing-0.0.1-SNAPSHOT.jar.
-
-Το repository του frontend είναι το https://github.com/Roukas-Tasos/house-spiffing-angular.
 
 Testing
 API Testing
