@@ -16,8 +16,8 @@ import java.time.LocalDate;
 @Setter
 public class ChoreUpdateDTO {
 
-//    @NotNull(message = "Id is mandatory")
-//    private Long id;
+    @NotNull(message = "Id is mandatory")
+    private Long id;
 
     @NotNull(message = "Name is mandatory")
     @Size(max = 15, message = "Name of category must not exceed 15 characters")

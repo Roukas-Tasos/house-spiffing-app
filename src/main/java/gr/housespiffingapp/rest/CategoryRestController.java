@@ -69,7 +69,7 @@ public class CategoryRestController {
     }
 
     @Operation(summary = "Deletes a category", description = "Deletes a category by its Id")
-    @DeleteMapping("categories/{id}")
+    @DeleteMapping("categories/delete/{id}")
     public String deleteCategory(@PathVariable Long id) throws AppObjectNotFoundException {
 
         categoryService.delete(id);

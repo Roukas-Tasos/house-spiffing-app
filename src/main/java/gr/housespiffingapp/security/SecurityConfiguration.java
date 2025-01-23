@@ -46,11 +46,18 @@ public class SecurityConfiguration {
                 .exceptionHandling(exceptions -> exceptions
                         .authenticationEntryPoint(myCustomAuthenticationEntryPoint()))
                 .authorizeHttpRequests(req -> req
-                                .requestMatchers("/").permitAll()
-                        .requestMatchers("api/auth/authenticate").permitAll()
-                        .requestMatchers("api/categories/**").authenticated()
-                        .requestMatchers("api/chores/**").authenticated()
-//                        .requestMatchers("/**").permitAll()
+                        .requestMatchers("/").permitAll()
+//                                .requestMatchers("/swagger-ui/**").permitAll()
+//                                .requestMatchers("/v3/api-docs/**").permitAll()
+//                        .requestMatchers("/swagger-ui/**").permitAll()
+//                                .requestMatchers("/v3/api-docs*/**").permitAll()
+//                        .requestMatchers("api/auth/authenticate").permitAll()
+//                        .requestMatchers("api/categories/**").authenticated()
+//                        .requestMatchers("api/chores/**").authenticated()
+//                        .requestMatchers("api/users/save").permitAll()
+//                        .requestMatchers("api/users/**").denyAll()
+
+                      .requestMatchers("/**").permitAll()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(authenticationProvider())

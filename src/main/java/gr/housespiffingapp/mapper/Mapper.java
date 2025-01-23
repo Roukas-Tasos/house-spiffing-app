@@ -71,7 +71,7 @@ public class Mapper {
                 .map(this::mapToChoreReadOnlyDTO)
                 .collect(Collectors.toList());
 
-        dto.setCategoryId(category.getId());
+        dto.setId(category.getId());
         dto.setName(category.getName());
         dto.setDescription(category.getDescription());
         dto.setChores(choreDTOs);

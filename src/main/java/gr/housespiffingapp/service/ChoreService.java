@@ -51,6 +51,15 @@ public class ChoreService implements IChoreService {
     }
 
     @Override
+    public ChoreReadOnlyDTO findByName(String name) throws AppObjectNotFoundException {
+
+        Chore chore = choreRepository.findByName(name)
+                .orElseThrow(() -> new AppObjectNotFoundException("Category", "Category with name " + name + " not found"));
+
+        return mapper.mapToChoreReadOnlyDTO(chore);
+    }
+
+    @Override
     @Transactional(rollbackOn = Exception.class)
     public ChoreReadOnlyDTO save(ChoreInsertDTO choreInsertDTO) throws AppObjectAlreadyExists, AppObjectNotFoundException {
 
@@ -83,6 +92,10 @@ public class ChoreService implements IChoreService {
 
         Chore existingChore = choreRepository.findById(id)
                 .orElseThrow(() -> new AppObjectNotFoundException("Chore", "Chore with id " + id + " not found"));
+
+        existingChore.setName(choreUpdateDTO.getName());
+        existingChore.setDescription(choreUpdateDTO.getDescription());
+        existingChore.setDueDate(choreUpdateDTO.getDueDate());
 
         return mapper.mapToChoreReadOnlyDTO(choreRepository.save(existingChore));
     }

@@ -14,7 +14,7 @@ import java.util.List;
 @Setter
 public class CategoryReadOnlyDTO {
 
-    private Long categoryId;
+    private Long id;
 
     private String name;
 

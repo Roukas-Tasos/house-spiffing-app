@@ -47,6 +47,16 @@ public class ChoreRestController {
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
+    @Operation(summary = "Returns a chore", description = "Returns a chore by its name")
+    @GetMapping("/chores/by-name/{name}")
+    public ResponseEntity<ChoreReadOnlyDTO> getCategory(@PathVariable String name)
+            throws AppObjectNotFoundException {
+
+        ChoreReadOnlyDTO dto = choreService.findByName(name);
+
+        return new ResponseEntity<>(dto, HttpStatus.OK);
+    }
+
     @Operation(summary = "Inserts a chore", description = "Inserts a new custom chore")
     @PostMapping("/chores/save")
     public ResponseEntity<ChoreReadOnlyDTO> saveChore(@Valid @RequestBody ChoreInsertDTO choreInsertDTO)
@@ -57,7 +67,7 @@ public class ChoreRestController {
     }
 
     @Operation(summary = "Deletes a chore", description = "Deletes a chore by their ID")
-    @DeleteMapping("chores/{id}")
+    @DeleteMapping("chores/delete/{id}")
     public String delete(@PathVariable Long id)
             throws AppObjectNotFoundException {
 

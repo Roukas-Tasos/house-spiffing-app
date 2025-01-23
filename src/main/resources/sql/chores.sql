@@ -17,5 +17,7 @@ INSERT INTO chores(id, name, description, category_id) VALUES
         (16, 'Sweeping patios/balconies', 'Keep patios/balconies clean and safe to use', 5),
         (17, 'Watering plants', 'Keeping our flower friends healthy and vibrant', 5),
         (18, 'Fixing minor repairs', 'Fixing necessary minor repairs in the household', 6),
-        (19, 'Maintaining HVAC systems', 'Keeping vital appliances of the household clean and operational', 6);
-ALTER TABLE chores AUTO_INCREMENT = 20;
+        (19, 'Maintaining HVAC systems', 'Keeping vital appliances of the household clean and operational', 6),
+        (20, 'Tidying up', 'Tidy up clothes and scattered toys', 7),
+        (21, 'Pray', 'Pray to the Almighty for survival', 7);
+ALTER TABLE chores AUTO_INCREMENT = 22;

@@ -71,9 +71,10 @@ public class CategoryService implements ICategoryService {
         Category existingCategory = categoryRepository.findById(categoryUpdateDTO.getId())
                 .orElseThrow(() -> new AppObjectNotFoundException("Category", "Category with id " + id + " not found"));
 
-        Category updatedCategory = categoryRepository.save(existingCategory);
+        existingCategory.setName(categoryUpdateDTO.getName());
+        existingCategory.setDescription(categoryUpdateDTO.getDescription());
 
-        return mapper.mapToCategoryReadOnlyDTO(updatedCategory);
+        return mapper.mapToCategoryReadOnlyDTO(categoryRepository.save(existingCategory));
     }
 
     @Override
