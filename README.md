@@ -15,8 +15,12 @@ Angular CLI εγκατεστημένο globally
 Git για version control
 
 Η εφαρμογή τρέχει στο http://localhost:8080.
-Μετά την ετνολή ./gradlew clean build, δημιουργείται ένα αρχείο .jar στον φάκελο build/libs με όνομα house-spiffing-0.0.1-SNAPSHOT.jar.
-Έπειτα, τρέχουμε την εντολή java -jar build/libs/house-spiffing-0.0.1-SNAPSHOT.jar.  
+Αφού τρέξουμε git clone <house-spiffing-app>, περιηγούμαστε στον φάκελο που έχει δημιουργηθεί.
+Θα χρειαστεί να δημιουργήσουμε και να κάνουμε configure μια δική μας βάση δεδομένων.
+Μετά την εντολή ./gradlew clean build, δημιουργείται ένα αρχείο .jar στον φάκελο build/libs με όνομα house-spiffing-0.0.1-SNAPSHOT.jar.
+Έπειτα, τρέχουμε την εντολή java -jar build/libs/house-spiffing-0.0.1-SNAPSHOT.jar.
+
+Το repository του frontend είναι το https://github.com/Roukas-Tasos/house-spiffing-angular.
 
 Testing
 API Testing
